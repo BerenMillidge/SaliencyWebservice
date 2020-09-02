@@ -1,0 +1,129 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+console.log('Setting up node http server for salience application')
+const app = require('../app');
+const debug = require('debug')('enyo-backend:server');
+const http = require('http');
+const config = require('../config');
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+const defaultPort = config.defaultPort || 3000;
+const maxPort = config.maxPort || 8000;
+const serverTimeout = config.serverTimeout || 120000;
+
+var port = normalizePort(process.env.PORT || defaultPort);
+app.set('port', port);
+
+
+/**
+ * Create HTTP server.
+ */
+
+var server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+server.setTimeout(serverTimeout);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      iterateUntilPortFound(maxPort);
+      //process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+function iterateUntilPortFound(maxPort){
+  port = port + 1;
+  console.log('Port: ' + (port-1) + ' in use. Trying new port: ' + port);
+  if(port >maxPort){
+    console.error('Max port exceeded. Could not find any open ports for the server. Process exiting');
+    process.exit(1);
+  }
+  server.close(function(){
+    console.log('server shutting down, being deleted');
+    server = undefined;
+
+  });
+
+
+  app.set('port', port);
+  server = http.createServer(app);
+  server.on('error', onError);
+  server.on('listening', onListening);
+  server.setTimeout(serverTimeout);
+
+
+
+}
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  console.log('Server successfully listening on port: ' + port);
+  //attach io to server
+  //io.attach(server);
+  var addr = server.address();
+  console.log('Server address: ' +addr);
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
+
+module.exports = {
+  server: server
+}

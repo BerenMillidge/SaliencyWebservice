@@ -1,0 +1,90 @@
+.image-drop-container {
+	margin: 10px;
+	border: red dashed 3px;
+	width: 100%;
+	height: 100%;
+	width: 300px;
+	height: 300px;
+	background-color: #f3edff;
+	border: 1px solid #dbcaf9;
+	box-shadow: 0 2px 2px 0 rgba(230, 219,249, 0.4);
+	position: relative;	
+}
+
+.image-drop-container:hover{
+	box-shadow: 2px 4px 4px 2px rgba(202,188,229,0.6);
+	position: relative;
+	border: 2px dashed #d2c7e5;
+}
+
+.drop-box-input-id{
+	position: relative;
+	opacity: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 0;
+}
+
+/*perfect! this works! */
+.image-drop-container-hovered{
+	opacity: 0.8;
+	background-color: #bba8e0; 
+	position: relative;
+	box-shadow: 4px 4px 4px 4px rgba(202,188,229,0.6);
+}
+
+.drop-text-container{
+	position: absolute;
+	top: 40%;
+	left: 20%;
+	width: 60%;
+	max-width: 60%;
+	text-align: center;
+	z-index: 2;
+}
+
+.drop-box-icon{
+	width: 100%;
+	height:100%;
+	font-size: 5rem;
+	opacity: 1;
+}
+
+.drop-box-icon-container{
+	font-size: 6rem;
+	opacity: 1;
+}
+.drop-box-text{
+	font-style: italic;
+	opacity: 0.9;
+}
+
+
+.drop-box{
+	width: 100%;
+	height: 100%;
+}
+.drop-box-slider{
+	position: absolute;
+	top: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.drop-box-slider-hovered {
+	opacity: 0.4;
+	box-shadow: 4px 4px 4px 4px rgba(202,188,229,0.6);
+}
+
+
+.drop-box-slider-text{
+	opacity: 1;
+	font-weight: bold;
+	visibility: visible;
+	color: #dfd1d9;
+}
+
+.image-submit-button{
+	margin-top: 30px;
+	border: red dashed 3px;
+}

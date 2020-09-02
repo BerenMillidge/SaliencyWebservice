@@ -1,2 +1,2 @@
-# SaliencyWebservice
-Sideproject of a webservice where people can submit images and receive automatic saliency maps
+# Saliency-Webservice
+A side project setting up a webservice allowing people to submit images and get saliency maps back.
